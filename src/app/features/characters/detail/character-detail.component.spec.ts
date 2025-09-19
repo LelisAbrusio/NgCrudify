@@ -60,7 +60,6 @@ describe('CharacterDetailComponent', () => {
     );
 
     // IMPORTANT: provide the Subject itself (not asObservable),
-    // so we can call .next(...) in tests.
     const paramMap$ = new Subject<any>();
     const mockActivatedRoute: Partial<ActivatedRoute> = {
       paramMap: paramMap$ as any,
@@ -72,7 +71,7 @@ describe('CharacterDetailComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        CharacterDetailComponent,   // standalone
+        CharacterDetailComponent,
         NoopAnimationsModule,
       ],
       providers: [
@@ -92,7 +91,7 @@ describe('CharacterDetailComponent', () => {
     fixture = TestBed.createComponent(CharacterDetailComponent);
     component = fixture.componentInstance;
 
-    fixture.detectChanges(); // triggers ngOnInit
+    fixture.detectChanges();
 
     // If in routed mode (no dialogData), emit paramMap once (component uses take(1))
     if (!dialogData) {

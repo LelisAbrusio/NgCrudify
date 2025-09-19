@@ -23,7 +23,7 @@ describe('ApiService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify(); // ensure no outstanding requests
+    httpMock.verify();
   });
 
   it('listCharacters(): builds URL without name when empty and returns a typed page', async () => {

@@ -149,12 +149,8 @@ describe('InfiniteScrollDirective', () => {
     expect((dir as any).onScrollFallback).toBeUndefined();
   });
 
-  // --- Additional SAFE coverage tests ---
 
-  // 1) Cover defaultView || globalThis by forcing defaultView = null (so code uses globalThis),
-  // without ever redefining globalThis itself.
   test('falls back to globalThis when document.defaultView is null (safe)', () => {
-  // Make IO exist so the directive still takes the "IO available" path after choosing globalThis.
   const observe = jest.fn();
   const disconnect = jest.fn();
   class IOStub {
@@ -164,7 +160,6 @@ describe('InfiniteScrollDirective', () => {
   }
   (window as any).IntersectionObserver = IOStub as any;
 
-  // Mock the getter of document.defaultView to return null
   const dvSpy = jest.spyOn(document, 'defaultView', 'get')
     .mockReturnValue(null as any);
 
@@ -178,7 +173,6 @@ describe('InfiniteScrollDirective', () => {
     const f = TestBed.createComponent(HostComponent);
     f.detectChanges(); // triggers ngOnInit in the directive
 
-    // The directive should have used globalThis and still created IO
     expect(observe).toHaveBeenCalledTimes(1);
 
     f.destroy();
@@ -189,7 +183,6 @@ describe('InfiniteScrollDirective', () => {
 });
 
 
-  // 2) Cover innerHeight || 0 by removing innerHeight → vp = 0
   test('uses innerHeight || 0 (vp=0) and emits when element is within 200px', () => {
     const originalIH = Object.getOwnPropertyDescriptor(window as any, 'innerHeight');
     Object.defineProperty(window, 'innerHeight', { configurable: true, value: undefined });
@@ -207,7 +200,7 @@ describe('InfiniteScrollDirective', () => {
     const el: HTMLElement = debugEl.nativeElement;
 
     jest.spyOn(el, 'getBoundingClientRect').mockReturnValue({
-      top: 150, // <= 0 + 200
+      top: 150,
       left: 0,
       bottom: 0,
       right: 0,
@@ -218,7 +211,6 @@ describe('InfiniteScrollDirective', () => {
       toJSON: () => {},
     } as DOMRect);
 
-    // Trigger CD so initial check reads mocked rect
     f2.detectChanges();
     expect(f2.componentInstance.count).toBe(1);
 
@@ -226,7 +218,6 @@ describe('InfiniteScrollDirective', () => {
     f2.destroy();
   });
 
-  // 3) Cover rAF || setTimeout fallback by deleting requestAnimationFrame
   test('falls back to setTimeout when requestAnimationFrame is missing', async () => {
     delete (window as any).IntersectionObserver;
 
@@ -246,15 +237,13 @@ describe('InfiniteScrollDirective', () => {
 
     const f2 = TestBed.createComponent(HostComponent);
 
-    // Prepare element rect BEFORE detectChanges (initial check runs right after init)
     const debugEl = f2.debugElement.query(By.css('[appInfiniteScroll]'));
     const el: HTMLElement = debugEl.nativeElement;
 
     const rectSpy = jest.spyOn(el, 'getBoundingClientRect');
 
-    // Initial: far from viewport -> NO initial emit
     rectSpy.mockReturnValue({
-        top: 2000, // > 600 + 200, won't emit
+        top: 2000,
         left: 0,
         bottom: 0,
         right: 0,
@@ -265,12 +254,11 @@ describe('InfiniteScrollDirective', () => {
         toJSON: () => {},
     } as DOMRect);
 
-    f2.detectChanges(); // ngOnInit + initial check
+    f2.detectChanges();
     expect(f2.componentInstance.count).toBe(0);
 
-    // Now make it eligible and simulate scroll; fallback uses setTimeout(16)
     rectSpy.mockReturnValue({
-        top: 790, // <= 600 + 200, will emit
+        top: 790,
         left: 0,
         bottom: 0,
         right: 0,
