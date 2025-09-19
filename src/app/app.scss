@@ -1,0 +1,23 @@
+:host {
+  --bg: #0f1115;   /* dark friendly */
+  --fg: #e9eef7;
+  --accent: #7aa2ff;
+
+  color-scheme: dark;
+  display: block;
+  min-height: 100dvh;
+  background:
+    radial-gradient(60% 40% at 10% -10%, #141826 0%, transparent 60%) no-repeat,
+    radial-gradient(40% 30% at 110% 0%, #171a26 0%, transparent 60%) no-repeat,
+    #0b0e14;
+  color: var(--fg);
+}
+
+mat-toolbar {
+  background: linear-gradient(90deg, #0d111a, #11172a);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.content {
+  padding: clamp(8px, 1.5vw, 20px);
+}

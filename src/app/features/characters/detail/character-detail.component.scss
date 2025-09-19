@@ -1,0 +1,90 @@
+:host {
+  --radius: 20px;
+  --shadow: 0 16px 48px rgba(0,0,0,.35);
+  --bg: var(--surface, #11151d);
+  --fg: var(--on-surface, #e9eef7);
+  --muted: color-mix(in srgb, var(--fg) 70%, transparent);
+  --accent: #7aa2ff;
+
+  display: block;
+  color: var(--fg);
+}
+
+:host ::ng-deep .mat-mdc-dialog-surface,
+:host ::ng-deep .mdc-dialog__surface {
+  border-radius: var(--radius) !important;
+  background: linear-gradient(180deg, #0f1420 0%, #0c1019 100%);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+:host ::ng-deep .cdk-overlay-backdrop {
+  backdrop-filter: blur(4px);
+}
+
+.detail-wrap {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  padding: clamp(16px, 2vw, 28px);
+  max-width: min(860px, 92vw);
+  align-items: start;
+
+  &.entering .content {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+}
+
+.media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 6px);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 6px 20px rgba(0,0,0,.5);
+  background: #151b28;
+}
+
+.content {
+  display: grid;
+  gap: 10px;
+  transition: transform .35s ease, opacity .35s ease;
+}
+
+.title {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+
+.meta {
+  margin: 0;
+  color: var(--muted);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  .sep {
+    opacity: .6;
+  }
+}
+
+.actions {
+  margin-top: 10px;
+
+  button[mat-raised-button] {
+    text-transform: none;
+    border-radius: 12px;
+    font-weight: 600;
+    padding-inline: 18px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.25);
+  }
+}
+
+@media (max-width: 700px) {
+  .detail-wrap {
+    grid-template-columns: 1fr;
+  }
+}

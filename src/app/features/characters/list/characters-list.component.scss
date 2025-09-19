@@ -1,0 +1,113 @@
+:host {
+  --gap: 12px;
+  --radius: 16px;
+  --shadow: 0 6px 18px rgba(0,0,0,.12);
+  --border: 1px solid color-mix(in srgb, var(--fg, #111) 10%, transparent);
+  display: block;
+}
+
+.container {
+  padding: clamp(12px, 2vw, 24px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.toolbar {
+  display: flex;
+  gap: var(--gap);
+  align-items: center;
+  margin-bottom: clamp(8px, 1.2vw, 16px);
+
+  input[matinput], input[matInput] {
+    flex: 1 1 auto;
+    background: color-mix(in srgb, var(--bg, #fff) 90%, var(--fg, #111) 10%);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    border: 1px solid rgba(0,0,0,.08);
+    outline: none;
+
+    &:focus {
+      border-color: rgba(0,0,0,.18);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #3f51b5) 20%, transparent);
+    }
+  }
+
+  button[mat-raised-button] {
+    border-radius: 999px;
+    text-transform: none;
+    font-weight: 600;
+    padding-inline: 18px;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* Dialogos (detail/form) */
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 20px !important;
+  box-shadow: var(--shadow);
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 16px;
+
+  img {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: var(--border);
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    opacity: .9;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+
+  input[matInput] {
+    background: color-mix(in srgb, var(--bg, #fff) 92%, var(--fg, #111) 8%);
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,.08);
+    padding: 10px 12px;
+  }
+
+  [mat-dialog-actions] {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 8px;
+
+    button {
+      text-transform: none;
+      border-radius: 10px;
+    }
+  }
+}
+
+/* Infinite scroll sentinel invisível mas “clicável” pelo observer */
+[appInfiniteScroll] {
+  display: block;
+  height: 1px;
+}

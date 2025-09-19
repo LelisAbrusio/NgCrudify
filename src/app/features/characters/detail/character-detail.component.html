@@ -1,0 +1,36 @@
+<ng-container *ngIf="data as d; else loading">
+  <div class="detail-wrap" [class.entering]="entering()">
+    <div class="media">
+      <img [src]="d.image" [alt]="d.name" />
+    </div>
+
+    <div class="content">
+      <h2 class="title">{{ d.name }}</h2>
+      <p class="meta">
+        <strong>Status:</strong> {{ d.status }}
+        <span class="sep">•</span>
+        <strong>Species:</strong> {{ d.species }}
+      </p>
+
+      <div class="actions">
+        <!-- Edit goes to /characters/:id/edit (works from route or dialog) -->
+        <button
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/characters', d.id, 'edit']">
+          Edit
+        </button>
+
+        <!-- Delete calls component method -->
+        <button mat-button color="warn" (click)="remove(d.id)">Delete</button>
+
+        <!-- Close dialog / go back when routed -->
+        <button mat-button (click)="close()">Close</button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="detail-wrap skeleton">Loading…</div>
+</ng-template>

@@ -1,0 +1,6 @@
+<mat-card (click)="open.emit()">
+    <img style="width:100%; height:auto; object-fit: cover;" [ngSrc]="image()" width="300" height="300" priority alt="{{name()}}" />
+    <mat-card-title>{{ name() }}</mat-card-title>
+    <mat-card-subtitle>{{ subtitle() }}</mat-card-subtitle>
+    <ng-content></ng-content>
+</mat-card>

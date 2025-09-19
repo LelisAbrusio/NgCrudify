@@ -1,0 +1,17 @@
+<section class="container">
+    <h1>Characters</h1>
+    <input matInput placeholder="Search by name" [formControl]="searchCtrl" />
+    <div class="grid">
+      <app-character-card
+        *ngFor="let c of store.filtered()"
+        [image]="c.image" [name]="c.name" [subtitle]="c.species"
+        (open)="goDetail(c.id)">
+      </app-character-card>
+    </div>
+
+    <div class="spinner" *ngIf="store.status()==='loading'">
+      <mat-spinner diameter="32"></mat-spinner>
+    </div>
+
+    <div appInfiniteScroll (scrolled)="loadMore()"></div>
+</section>
