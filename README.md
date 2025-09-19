@@ -151,7 +151,7 @@ The Rick & Morty API is **read-only**. To support CRUD UX:
 
 ```bash
 npm run test:cov
-# open coverage/index.html
+# then open coverage/index.html
 ```
 
 If the HTML looks empty, ensure tests succeeded and your browser isn’t caching an old report. Delete `/coverage` and re-run if needed.
